@@ -15,8 +15,7 @@ fn greet(name: &str) -> String {
 #[tokio::main]
 #[tauri::command]
 async fn complete(prompt: &str) -> String {
-    // let client = Client::new().with_api_key("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");
-    let client = Client::new();
+    let client = Client::new().with_api_key("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");
 
     let completion_request = CreateCompletionRequest {
         model: "text-davinci-003".to_owned(),
