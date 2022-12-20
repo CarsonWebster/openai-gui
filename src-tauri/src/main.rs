@@ -12,15 +12,19 @@ fn greet(name: &str) -> String {
     format!("Hello, {}! You've been greeted from Rust!", name)
 }
 
+
+
 #[tokio::main]
 #[tauri::command]
-async fn complete(prompt: &str) -> String {
-    let client = Client::new();
+async fn complete(prompt: &str, _model: &str, temperature: f32, max_credits: u16) -> String {
+    println!("Completing: {}", prompt);
+    let client = Client::new().with_api_key("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");
 
     let completion_request = CreateCompletionRequest {
         model: "text-davinci-003".to_owned(),
         prompt: Some(prompt.to_owned()),
-        max_tokens: Some(100),
+        max_tokens: Some(max_credits),
+        temperature: Some(temperature),
         ..Default::default()
     };
     let completion_response = Completion::create(&client, completion_request).await.unwrap();
